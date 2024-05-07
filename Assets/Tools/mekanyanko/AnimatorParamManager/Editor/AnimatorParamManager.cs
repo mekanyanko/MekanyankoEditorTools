@@ -1,4 +1,4 @@
-using MekanekoTools;
+ï»¿using MekanekoTools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -10,7 +10,7 @@ namespace MekanekoTools
 {
     public class AnimatorParamManager : EditorWindow
     {
-        #region •Ï”‚ÌéŒ¾
+        #region å¤‰æ•°ã®å®£è¨€
         private AnimatorController targetObject;
         private Vector2 scrollPosition;
         private int all_States_Count;
@@ -18,9 +18,9 @@ namespace MekanekoTools
         private int writeDefaults_OFF_Count;
         private int emptyStates_Empty_Count;
         private AnimationClip emptyAnimationClip;
-        #endregion •Ï”‚ÌéŒ¾
+        #endregion å¤‰æ•°ã®å®£è¨€
 
-        // ƒƒjƒ…[‚©‚çŒÄ‚Ño‚·ê‡
+        // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰å‘¼ã³å‡ºã™å ´åˆ
         [MenuItem("Tools/Mekanyanko Tools/Animator Param Manager")]
         public static void OpenAnimatorParamManager()
         {
@@ -34,13 +34,13 @@ namespace MekanekoTools
 
             EditorGUILayout.Space(10);
 
-            // •ÏXƒ`ƒFƒbƒN‚ÌÀ‘•
+            // å¤‰æ›´ãƒã‚§ãƒƒã‚¯ã®å®Ÿè£…
             targetObject = EditorGUILayout.ObjectField("Target Animator", targetObject, typeof(AnimatorController), true) as AnimatorController;
 
 
             if (targetObject == null) return;
 
-            if (GUILayout.Button("AnimatorController‚Ìî•ñ‚ğæ“¾‚·‚é"))
+            if (GUILayout.Button("AnimatorControllerã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹"))
             {
 
                 CheckAnimatorController(targetObject);
@@ -56,19 +56,19 @@ namespace MekanekoTools
             EditorGUILayout.Space(10);
 
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("WriteDefaults‚ğ‚·‚×‚ÄON‚É‚·‚éB") && writeDefaults_OFF_Count > 0)
+            if (GUILayout.Button("WriteDefaultsã‚’ã™ã¹ã¦ONã«ã™ã‚‹ã€‚") && writeDefaults_OFF_Count > 0)
             {
-                // Šm”F‚Ìƒ_ƒCƒAƒƒO‚ğ•\¦‚·‚é
-                if (EditorUtility.DisplayDialog("Šm”F", "WriteDefaults‚ğ‚·‚×‚ÄON‚É‚µ‚Ü‚·‚©H", "OK", "Cancel"))
+                // ç¢ºèªã®ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã™ã‚‹
+                if (EditorUtility.DisplayDialog("ç¢ºèª", "WriteDefaultsã‚’ã™ã¹ã¦ONã«ã—ã¾ã™ã‹ï¼Ÿ", "OK", "Cancel"))
                 {
                     SetWriteDefaults(targetObject, true);
                 }
             }
 
-            if (GUILayout.Button("WriteDefaults‚ğ‚·‚×‚ÄOFF‚É‚·‚éB") && writeDefaults_ON_Count > 0)
+            if (GUILayout.Button("WriteDefaultsã‚’ã™ã¹ã¦OFFã«ã™ã‚‹ã€‚") && writeDefaults_ON_Count > 0)
             {
-                // Šm”F‚Ìƒ_ƒCƒAƒƒO‚ğ•\¦‚·‚é
-                if (EditorUtility.DisplayDialog("Šm”F", "WriteDefaults‚ğ‚·‚×‚ÄOFF‚É‚µ‚Ü‚·‚©H", "OK", "Cancel"))
+                // ç¢ºèªã®ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã™ã‚‹
+                if (EditorUtility.DisplayDialog("ç¢ºèª", "WriteDefaultsã‚’ã™ã¹ã¦OFFã«ã—ã¾ã™ã‹ï¼Ÿ", "OK", "Cancel"))
                 {
                     SetWriteDefaults(targetObject, false);
                 }
@@ -77,9 +77,9 @@ namespace MekanekoTools
 
             EditorGUILayout.Space(10);
 
-            // ‹ó‚ÌState‚Ìˆ—
+            // ç©ºã®Stateã®å‡¦ç†
 
-            if (GUILayout.Button("‹ó‚ÌState‚É‹ó‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒZƒbƒg‚·‚éB") && emptyStates_Empty_Count > 0)
+            if (GUILayout.Button("ç©ºã®Stateã«ç©ºã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã€‚") && emptyStates_Empty_Count > 0)
             {
                 SetEmptyAnimationClip();
 
@@ -100,8 +100,8 @@ namespace MekanekoTools
 
             }
 
-            // AnimatorController‚Ì•ÏX“à—e‚ğ•Û‘¶‚µ‚Ä”½‰f‚·‚éB
-            if (GUILayout.Button("•ÏX‚ğ•Û‘¶‚·‚éB"))
+            // AnimatorControllerã®å¤‰æ›´å†…å®¹ã‚’ä¿å­˜ã—ã¦åæ˜ ã™ã‚‹ã€‚
+            if (GUILayout.Button("å¤‰æ›´ã‚’ä¿å­˜ã™ã‚‹ã€‚"))
             {
                 EditorUtility.SetDirty(targetObject);
                 AssetDatabase.SaveAssets();
@@ -110,7 +110,7 @@ namespace MekanekoTools
         }
 
         /// <summary>
-        /// AnimatorController‚Ì’†‚Ì‚·‚×‚Ä‚ÌState‚Ìî•ñ‚ğæ“¾‚·‚é
+        /// AnimatorControllerã®ä¸­ã®ã™ã¹ã¦ã®Stateã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹
         /// </summary>
         /// <param name="animatorController"></param>
         private void CheckAnimatorController(AnimatorController animatorController)
