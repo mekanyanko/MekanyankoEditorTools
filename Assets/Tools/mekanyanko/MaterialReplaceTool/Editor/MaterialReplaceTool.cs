@@ -9,10 +9,10 @@ namespace MekanekoTools
     public class MaterialReplaceTool : EditorWindow
     {
         private GameObject targetObject;
+        private bool CallFromContextMenu = false;
         private Vector2 scrollPosition;
         private Material[] targetMaterials;
         private Material[] newMaterials;
-        private Material[] oldMaterials;
 
         // コンテキストメニューから呼び出す場合
         [MenuItem("GameObject/Material Replace Tool", false, 1)]
@@ -30,7 +30,7 @@ namespace MekanekoTools
         public void SetGameObject(GameObject obj)
         {
             targetObject = obj;
-            ResetMaterialsParam();
+            CallFromContextMenu = true;
         }
 
         // メニューから呼び出す場合
@@ -52,18 +52,26 @@ namespace MekanekoTools
             targetObject = EditorGUILayout.ObjectField("Replace Target(Avatar)", targetObject, typeof(GameObject), true) as GameObject;
             if (EditorGUI.EndChangeCheck())
             {
-                ResetMaterialsParam();
+                if (targetObject != null)
+                {
+                    CheckMaterials(targetObject);
+                }
             }
 
             if (targetObject == null) return;
 
-            if (GUILayout.Button("マテリアル情報を再取得する"))
+            if (CallFromContextMenu)
             {
-
+                CallFromContextMenu = false;
                 CheckMaterials(targetObject);
             }
 
-            if (targetMaterials == null || newMaterials == null || oldMaterials == null) return;
+            //if (GUILayout.Button("マテリアル情報を再取得する"))
+            //{
+            //    CheckMaterials(targetObject);
+            //}
+
+            if (targetMaterials == null || newMaterials == null) return;
 
             EditorGUILayout.Space(5);
 
@@ -99,7 +107,7 @@ namespace MekanekoTools
         {
             ResetMaterialsParam();
 
-            var renderers = targetObject.GetComponentsInChildren<Renderer>();
+            var renderers = targetObject.GetComponentsInChildren<Renderer>(true);
 
             // Meshで使用されているMaterialを取得し、重複を削除。
             var materials = renderers.SelectMany(r => r.sharedMaterials).Distinct().ToArray();
@@ -111,12 +119,10 @@ namespace MekanekoTools
                 {
                     targetMaterials = new Material[materials.Length];
                     newMaterials = new Material[materials.Length];
-                    oldMaterials = new Material[materials.Length];
                     for (int i = 0; i < materials.Length; i++)
                     {
                         targetMaterials[i] = materials[i];
                         newMaterials[i] = materials[i];
-                        oldMaterials[i] = materials[i];
                     }
                 }
             }
@@ -127,7 +133,6 @@ namespace MekanekoTools
             // パラメーター初期化
             targetMaterials = null;
             newMaterials = null;
-            oldMaterials = null;
         }
 
         private void ReplaceMaterials()
@@ -136,7 +141,7 @@ namespace MekanekoTools
             var changedMaterials = targetMaterials.Where((m, i) => m != newMaterials[i]).ToArray();
 
             //変更されているMaterialを置き換える
-            foreach (var renderer in targetObject.GetComponentsInChildren<Renderer>())
+            foreach (var renderer in targetObject.GetComponentsInChildren<Renderer>(true))
             {
                 var materials = renderer.sharedMaterials;
                 for (int i = 0; i < materials.Length; i++)
@@ -156,6 +161,8 @@ namespace MekanekoTools
                 }
                 renderer.sharedMaterials = materials;
             }
+
+            CheckMaterials(targetObject);
         }
     }
 }
