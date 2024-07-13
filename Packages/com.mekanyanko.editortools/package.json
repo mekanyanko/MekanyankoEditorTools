@@ -1,7 +1,7 @@
 {
   "name": "com.mekanyanko.editortools",
   "displayName": "MekanyankoEditorTools",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "These are tools developed by mekanyanko for modifying VRChat avatars. They are designed to be usable in environments other than VRChat as much as possible.",
   "url": "https://github.com/mekanyanko/MekanyankoEditorTools",
   "repo": "https://vpm.mekanyanko.com/vpm.json",
